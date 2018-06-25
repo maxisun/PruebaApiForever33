@@ -1,0 +1,12 @@
+//instalar el paquete nodemon para que el server se actualize cada vez que se guarde un archivo
+  npm install --save-dev nodemon
+  package.json/scripts : "start": "nodemon server.js"
+  npm start
+
+//login package to log incoming requests (para ver info en la terminal)
+  npm install --save morgan
+  app.js/ const morgan = require('morgan');
+  app.js/ app.use(morgan('dev'));
+
+//
+  

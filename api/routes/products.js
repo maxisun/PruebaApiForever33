@@ -8,9 +8,9 @@ router.get('/', (req, res, next) => {
   });
 });
 
-//peticiones POST
+//peticiones POST (status 201)
 router.post('/', (req, res, next) => {
-  res.status(200).json({
+  res.status(201).json({
     message: 'Handling POST request to /products'
   });
 });
@@ -30,6 +30,20 @@ router.get('/:productId', (req, res, next) => {
       message: 'You passed an ID'
     });
   }
+});
+
+//patch para reemplazar un producto
+router.patch('/:productId', (req, res, next) => {
+  res.status(200).json({
+    message: 'Updated product!'
+  });
+});
+
+//delete para borrar un producto
+router.delete('/:productId', (req, res, next) => {
+  res.status(200).json({
+    message: 'Deleted product!'
+  });
 });
 
 //el router configura esto para que pueda ser exportado y pueda ser usado como module.expots = app;
