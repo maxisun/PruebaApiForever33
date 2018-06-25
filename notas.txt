@@ -8,5 +8,10 @@
   app.js/ const morgan = require('morgan');
   app.js/ app.use(morgan('dev'));
 
-//
-  
+//Capitulo 5: manejo del body de requests: no soporta files, pero si: URL encoded bodies y JSON data
+  npm install --save body-parser
+  app.js/ const bodyParser = require('body-parser');
+  los atributos del json en postman deben ir encerrados en "" incluyendo los campos
+  CORS ERRORS: son error Cross-Origin Resource Sharing, basicamente son errores que se presentan al querer acceder a nuestra API desde otro servidor
+              y se deniega el acceso, asi que hay que permitirlo por medio de "Headers".
+  Porque no hay problema con PostMan? Porque le vale verga ya que es una herramienta de simulacion              

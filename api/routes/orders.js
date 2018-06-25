@@ -10,8 +10,14 @@ router.get('/', (req, res, next) => {
 
 //peticiones POST (status 201)
 router.post('/', (req, res, next) => {
+  //creando una orden a partir del req del POST
+  const order = {
+    productId: req.body.productId,
+    quantity: req.body.quantity
+  }
   res.status(201).json({
-    message: 'Order was created'
+    message: 'Order was created',
+    order: order
   });
 });
 

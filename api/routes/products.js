@@ -10,8 +10,14 @@ router.get('/', (req, res, next) => {
 
 //peticiones POST (status 201)
 router.post('/', (req, res, next) => {
+  //una const de producto que se crea a partir de los datos que se envian en la req de POST
+  const product = {
+    name: req.body.name,
+    price: req.body.price
+  };
   res.status(201).json({
-    message: 'Handling POST request to /products'
+    message: 'Handling POST request to /products',
+    createdProduct: product //mostrando el producto creado
   });
 });
 
