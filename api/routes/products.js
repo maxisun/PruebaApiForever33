@@ -15,5 +15,21 @@ router.post('/', (req, res, next) => {
   });
 });
 
+//obteniendo un producto especifico
+router.get('/:productId', (req, res, next) => {
+  //extrayendo el Id del request
+  const id = req.params.productId
+  if (id === 'special'){
+    res.status(200).json({
+      message: 'You discovered the special ID'
+      id: id
+    });
+  } else {
+    res.status(200).json({
+      message: 'You passed an ID'
+    });
+  }
+});
+
 //el router configura esto para que pueda ser exportado y pueda ser usado como module.expots = app;
 module.exports = router;
