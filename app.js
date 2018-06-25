@@ -4,9 +4,15 @@ const app = express();
 const morgan = require('morgan');
 //paquete de body bodyParser
 const bodyParser = require('body-parser');
+//paquete monoose
+const mongoose = require('mongoose');
 // constantes de rutas (imports)
 const productRoutes = require('./api/routes/products')
 const ordersRoutes = require('./api/routes/orders')
+
+//conexion a la base de datos, desde el link que nos proporciono la base de datos en ATLAS. REVISAR: nodemon.json para esa variable del password
+mongoose.connect('mongodb+srv://maxisun:maxiroot@node-rest-shop-40ulq.mongodb.net/test?retryWrites=true');
+
 
 //se usa entes de lidiar con las requests de las rutas
 app.use(morgan('dev'));

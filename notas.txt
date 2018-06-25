@@ -14,4 +14,15 @@
   los atributos del json en postman deben ir encerrados en "" incluyendo los campos
   CORS ERRORS: son error Cross-Origin Resource Sharing, basicamente son errores que se presentan al querer acceder a nuestra API desde otro servidor
               y se deniega el acceso, asi que hay que permitirlo por medio de "Headers".
-  Porque no hay problema con PostMan? Porque le vale verga ya que es una herramienta de simulacion              
+  Porque no hay problema con PostMan? Porque le vale verga ya que es una herramienta de simulacion
+
+//Capitulo 6: MongoDB, Mongoose
+  Sign up for MongoDB Atlas, porque es en la nube
+  Crea una cuenta y configurarla
+  Pon en la whitelist que todos puedan acceder a esa base de datos
+  connect, seleccione el 3.6 para arriba
+  --consola
+    npm install --save mongoose
+  Introducimos el uso de modelos, para modelar como se veran los objetos para la base de datos. api/models
+  --para variables de entorno
+    npm install dotenv --save  
