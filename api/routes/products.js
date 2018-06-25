@@ -21,7 +21,9 @@ router.get('/:productId', (req, res, next) => {
   const id = req.params.productId
   if (id === 'sebas+'){
     res.status(200).json({
-      message: 'You discovered the special ID: '+ id
+      //mostrando el id y el mensaje
+      message: 'You discovered the special ID',
+      id: id
     });
   } else {
     res.status(200).json({
