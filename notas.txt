@@ -30,3 +30,10 @@
 //Capitulo 7: validaciones de mongoose y constrainsts para mejorar respuestas de las peticiones
     solo es mejorar nuestras respuestas de la api, docs, result.
     for deprecated mongoose promise: mongoose.Promise = global.Promise;
+
+//Capitulo 8: manejo de ordenes
+    esto es para hacer el modelo de ordenes y la verificacion de post para evitar la insercion de una orden con un Id de un producto
+    INEXISTENTE
+
+//Capitulo 9: populating Querys
+  --merge querys to display all information
