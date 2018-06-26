@@ -25,4 +25,8 @@
     npm install --save mongoose
   Introducimos el uso de modelos, para modelar como se veran los objetos para la base de datos. api/models
   --para variables de entorno
-    npm install dotenv --save  
+    npm install dotenv --save
+
+//Capitulo 7: validaciones de mongoose y constrainsts para mejorar respuestas de las peticiones
+    solo es mejorar nuestras respuestas de la api, docs, result.
+    for deprecated mongoose promise: mongoose.Promise = global.Promise;

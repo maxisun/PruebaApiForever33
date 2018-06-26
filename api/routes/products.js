@@ -10,11 +10,25 @@ const Product = require('../models/product');
 //peticiones GET para obtener todos los productos
 router.get('/', (req, res, next) => {
   Product.find()//find() sin parametros = select *
+  .select('name price _id')
   .exec()
   .then(docs => {
-    console.log(docs);
+    const response = {
+      count: docs.length, //contamos todos lo productos
+      products: docs.map(doc =>{
+        return {
+          _id: doc._id,
+          name: doc.name,
+          price: doc.price,
+          request: {
+            type: 'GET',
+            url: 'https://maxisun-prueba.herokuapp.com/products/'+ doc._id
+          }
+        }
+      }) //ponemos un campo de Arreglo de Productos
+    }
     if (docs.length > 0){
-      res.status(200).json(docs);//retornamos todos los productos
+      res.status(200).json(response);//retornamos el response de arriba
     } else { //por si no hay productos
       res.status(404).json({
         message: "No products found"
@@ -44,12 +58,20 @@ router.post('/', (req, res, next) => {
     console.log(result);
     //request
     res.status(201).json({
-      message: 'Handling POST request to /products',
-      createdProduct: result //mostrando el producto creado
+      message: 'The product was created succesfully!',
+      //mostrando el producto creado
+      createdProduct: {
+        _id: result._id,
+        name: result.name,
+        price: result.price,
+        request: {
+          type: 'GET',
+          url: 'https://maxisun-prueba.herokuapp.com/products/'+ result._id
+        }
+      }
     });
     //error
   }).catch(err => {
-    console.log(err);
     res.status(500).json({
       error: err
     });
@@ -62,6 +84,7 @@ router.get('/:productId', (req, res, next) => {
   //extrayendo el Id del request
   const id = req.params.productId
   Product.findById(id)
+  .select('name price _id')
   .exec()
   .then(doc => {
     console.log("From database", doc);
@@ -73,7 +96,6 @@ router.get('/:productId', (req, res, next) => {
     }
   })
   .catch(err => {
-    console.log(err);
     res.status(500).json({error:err});
   });
 });
@@ -90,10 +112,11 @@ router.patch('/:productId', (req, res, next) => {
   .exec()
   .then(result =>{
     console.log(result);
-    res.status(200).json(result);
+    res.status(200).json({
+      message: 'The product was updated successfully'
+    });
   })
   .catch(err => {
-    console.log(err);
     res.status(500).json({
       error: err
     });
@@ -107,7 +130,9 @@ router.delete('/:productId', (req, res, next) => {
   Product.findByIdAndRemove(id)
   .exec()
   .then(result => {
-    res.status(200).json(result);
+    res.status(200).json({
+      message: 'The product was successfully deleted'
+    });
   })
   .catch(err => {
     console.log(err);
