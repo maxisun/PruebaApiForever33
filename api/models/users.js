@@ -4,7 +4,11 @@ const mongoose = require('mongoose');
 //creacion del Schema de productos
 const userSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId, //es un tipo de serial que es como una String larga
-  email: {type: String, required: true},
+  email: {
+    type: String,
+    required: true,
+    match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+  },// unique hace una optimizacion de correos unicos para una query
   password: {type: String, required: true}
 });
 

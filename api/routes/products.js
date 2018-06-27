@@ -37,7 +37,7 @@ const Product = require('../models/product');
 
 
 //peticiones GET para obtener todos los productos
-/*router.get('/', (req, res, next) => {
+router.get('/', (req, res, next) => {
   Product.find()//find() sin parametros = select *
   .select('name price _id productImage')
   .exec()
@@ -72,12 +72,12 @@ const Product = require('../models/product');
     });
   });
 });
-*/
+/*
 router.get('/', (req, res, next) => {
   res.status(200).json({
     message: 'holi'
   });
-});
+});*/
 
 
 
