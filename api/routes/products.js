@@ -3,6 +3,35 @@ const express = require('express');
 const router = express.Router();
 //paquete mongoose
 const mongoose = require('mongoose');
+//paquete Multer
+const multer = require('multer');
+//storage strategy
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) { //cb es callback
+    cb(null, './uploads/'); // cath de null por posible error, relative path to upload folder
+  },
+  filename: function(req, file, cb) {
+    cb(null, new Date().toISOString().replace(/:/g,'-') + file.originalname);
+    //cb(null, file.filename); // ejemplo de uso de uso del callback
+  }
+});
+//filtros de multer personalizados para la carga de archivos
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+//inicializando Multer, pasandole la estrategia de guardado de files
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5 // 5MB
+  },
+  fileFilter: fileFilter
+});
 //importando el modelo de productos
 const Product = require('../models/product');
 
@@ -10,7 +39,7 @@ const Product = require('../models/product');
 //peticiones GET para obtener todos los productos
 /*router.get('/', (req, res, next) => {
   Product.find()//find() sin parametros = select *
-  .select('name price _id')
+  .select('name price _id productImage')
   .exec()
   .then(docs => {
     const response = {
@@ -20,6 +49,7 @@ const Product = require('../models/product');
           _id: doc._id,
           name: doc.name,
           price: doc.price,
+          productImage: doc.productImage,
           request: {
             type: 'GET',
             url: 'https://maxisun-prueba.herokuapp.com/products/'+ doc._id
@@ -53,13 +83,14 @@ router.get('/', (req, res, next) => {
 
 
 
-//peticiones POST (status 201)
-router.post('/', (req, res, next) => {
+//peticiones POST (status 201), upload.single porque es solo una file
+router.post('/', upload.single('productImage') ,(req, res, next) => {
   //creando una instanca del modelo de producto. Como un constructor de Java. Se crea a partir de los datos que se envian en la req de POST
   const product = new Product({
     _id: new mongoose.Types.ObjectId(), //esto nos creara un Id automaticamente. Por el paquete mongoose
     name: req.body.name,
-    price: req.body.price
+    price: req.body.price,
+    productImage: req.file.path
   });
   // lo guarda en la base de datos. y hace log a la consola
   product.save()
@@ -73,6 +104,7 @@ router.post('/', (req, res, next) => {
         _id: result._id,
         name: result.name,
         price: result.price,
+        productImage: result.productImage,
         request: {
           type: 'GET',
           url: 'https://maxisun-prueba.herokuapp.com/products/'+ result._id
@@ -93,7 +125,7 @@ router.get('/:productId', (req, res, next) => {
   //extrayendo el Id del request
   const id = req.params.productId
   Product.findById(id)
-  .select('name price _id')
+  .select('name price _id productImage')
   .exec()
   .then(doc => {
     console.log("From database", doc);

@@ -7,8 +7,9 @@ const bodyParser = require('body-parser');
 //paquete monoose
 const mongoose = require('mongoose');
 // constantes de rutas (imports)
-const productRoutes = require('./api/routes/products')
-const ordersRoutes = require('./api/routes/orders')
+const productRoutes = require('./api/routes/products');
+const ordersRoutes = require('./api/routes/orders');
+const usersRoutes = require('./api/routes/users');
 
 //conexion a la base de datos, desde el link que nos proporciono la base de datos en ATLAS. REVISAR: nodemon.json para esa variable del password
 mongoose.connect('mongodb+srv://maxisun:maxiroot@node-rest-shop-40ulq.mongodb.net/test?retryWrites=true');
@@ -18,6 +19,8 @@ mongoose.Promise = global.Promise;
 
 //se usa entes de lidiar con las requests de las rutas
 app.use(morgan('dev'));
+//folder estatico para ver imagenes
+app.use('/uploads', express.static('uploads'));//primer parametro permite que se incluya el nombre del folder para que se busque en un browser
 //configurando el uso de bodyParser
 app.use(bodyParser.urlencoded({extended: false}));//parser para bodies de urlencoded al cual no queremos que sean extendidos, por eso el "false"
 app.use(bodyParser.json());//configuracion para bodies que contengan JSON
@@ -40,6 +43,8 @@ app.use((req, res, next) => {
 app.use('/products', productRoutes);
 //redirige las requests de orders hacia el archivo de orders.js
 app.use('/orders', ordersRoutes);
+//redirige las requests de users hacia el archivo de users.js
+app.use('/users', usersRoutes);
 
 //lidiando con errores, si no logro acceder a ninguna de las rutas de arriba
 app.use((req, res, next) => {

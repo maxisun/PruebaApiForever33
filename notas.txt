@@ -37,3 +37,16 @@
 
 //Capitulo 9: populating Querys
   --merge querys to display all information
+
+//Capitulo 10 Multer y el manejo de imagenes
+    npm install --save multer
+    //En vez de usar el raw de json usamos el tipo form para enviar los parametros y files que queremos y en headers,
+    quitamos el content type application/json
+    //se usan estrategias de guardado de files y filtros de files que queremos que se envien
+    // se hace que el folder uploads sea publico en app.js
+
+//Capitulo 11 User sign up y verificacion de usuario, encryptacion
+  //la creacion de un modelo de usuario
+  //la creacion de la ruta de usuario
+  //surge el problema de los usuarios que no se encryptan, asi que habra que bajar un paquete para solucionar esto
+  npm install bcrypt --save
