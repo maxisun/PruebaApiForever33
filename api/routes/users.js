@@ -15,11 +15,10 @@ const User = require('../models/users');
 router.get('/', (req, res, next) => {
   User.find()
   .select('_id email')
-  // muestra un merge de los productos linkeados a las ordenes y los campos que queremos que se vean nada mas
   .exec()
   .then(docs => {
     if (docs.length > 0){
-      res.status(200).json(docs);//retornamos el response de arriba
+      res.status(200).json(docs);
     } else { //por si no hay productos
       res.status(404).json({
         message: "No users found"
@@ -37,7 +36,7 @@ router.get('/', (req, res, next) => {
 
 
 
-//POST para usuario
+//POST para usuario signup
 router.post('/signup', (req, res, next) => {
   //verificando que no se repitan los correos
   User.find({email: req.body.email})
@@ -101,7 +100,7 @@ router.post('/login', (req, res, next) => {
         },
         process.env.JWT_KEY,
         {
-          expiresIn: "1h"
+          expiresIn: "8h"
         });
         return res.status(200).json({
           message: 'Login successfully',

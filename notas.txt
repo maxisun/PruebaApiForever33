@@ -56,3 +56,9 @@ Capitulo 12 User login y comparacion de passwords a travez de bcrypt, y JSONWEBT
   //Instalamos otro paquete que se llama jsonwebtoken que nos facilita la creacion de un token
   npm install jsonwebtoken --save
   revisar porque no es compatible con jwt.io
+
+Capitulo 13 Token como medio de acceso a rutas a travez del header
+  //middleware para autenticacion e importacion de ese middleware como segundo parametro a las rutas que nos interesan que implementen
+  esa autenticacion
+
+Capitulo 14 Controladores, pasar las rutas como parametros de una funcion mejor

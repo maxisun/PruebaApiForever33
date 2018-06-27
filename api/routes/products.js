@@ -32,6 +32,8 @@ const upload = multer({
   },
   fileFilter: fileFilter
 });
+//importanto Authentication de Token
+const checkAuth = require('../middleware/check-auth');
 //importando el modelo de productos
 const Product = require('../models/product');
 
@@ -80,11 +82,8 @@ router.get('/', (req, res, next) => {
 });*/
 
 
-
-
-
 //peticiones POST (status 201), upload.single porque es solo una file
-router.post('/', upload.single('productImage') ,(req, res, next) => {
+router.post('/', checkAuth, upload.single('productImage') ,(req, res, next) => {
   //creando una instanca del modelo de producto. Como un constructor de Java. Se crea a partir de los datos que se envian en la req de POST
   const product = new Product({
     _id: new mongoose.Types.ObjectId(), //esto nos creara un Id automaticamente. Por el paquete mongoose
@@ -143,7 +142,7 @@ router.get('/:productId', (req, res, next) => {
 
 
 //patch para reemplazar un producto
-router.patch('/:productId', (req, res, next) => {
+router.patch('/:productId', checkAuth, (req, res, next) => {
   const id = req.params.productId;
   const updateOperations = {};
   for (const ops of req.body){
@@ -166,7 +165,7 @@ router.patch('/:productId', (req, res, next) => {
 
 
 //delete para borrar un producto
-router.delete('/:productId', (req, res, next) => {
+router.delete('/:productId', checkAuth, (req, res, next) => {
   const id = req.params.productId
   Product.findByIdAndRemove(id)
   .exec()

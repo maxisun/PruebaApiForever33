@@ -2,13 +2,15 @@ const express = require('express');
 const router = express.Router();
 //paquete mongoose
 const mongoose = require('mongoose');
+//importanto Authentication de Token
+const checkAuth = require('../middleware/check-auth');
 //importando el modelo de orders
 const Order = require('../models/orders');
 //importando el modelo de productos
 const Product = require('../models/product');
 
 //peticiones GET
-router.get('/', (req, res, next) => {
+router.get('/', checkAuth, (req, res, next) => {
   Order.find()
   .select('_id productId quantity')
   // muestra un merge de los productos linkeados a las ordenes y los campos que queremos que se vean nada mas
@@ -31,7 +33,7 @@ router.get('/', (req, res, next) => {
 });
 
 //peticiones POST (status 201)
-router.post('/', (req, res, next) => {
+router.post('/', checkAuth, (req, res, next) => {
   //verificando la existencia del id de un producto
   Product.findById(req.body.productId)
     .then(product => {
@@ -68,7 +70,7 @@ router.post('/', (req, res, next) => {
 });
 
 //obteniendo una orden especifica
-router.get('/:orderId', (req, res, next) => {
+router.get('/:orderId', checkAuth, (req, res, next) => {
   //extrayendo el Id del request
   const id = req.params.orderId
   Order.findById(id)
@@ -90,7 +92,7 @@ router.get('/:orderId', (req, res, next) => {
 });
 
 //peticion delete a una orden especifica
-router.delete('/:orderId', (req, res, next) => {
+router.delete('/:orderId', checkAuth, (req, res, next) => {
   const id = req.params.orderId
   Order.findByIdAndRemove(id)
   .exec()
