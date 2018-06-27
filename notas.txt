@@ -50,3 +50,9 @@
   //la creacion de la ruta de usuario
   //surge el problema de los usuarios que no se encryptan, asi que habra que bajar un paquete para solucionar esto
   npm install bcrypt --save
+
+Capitulo 12 User login y comparacion de passwords a travez de bcrypt, y JSONWEBTOKEN
+  //bcrypt tiene su propio metodo de comparacion de contrasenas que es facil de implemetar ruta users/login
+  //Instalamos otro paquete que se llama jsonwebtoken que nos facilita la creacion de un token
+  npm install jsonwebtoken --save
+  revisar porque no es compatible con jwt.io

@@ -1,5 +1,6 @@
 {
   "env": {
-    "MONGO_ATLAS_PASSWORD": "maxiroot"
+    "MONGO_ATLAS_PASSWORD": "maxiroot",
+    "JWT_KEY": "secret"
   }
 }

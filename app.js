@@ -6,13 +6,15 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 //paquete monoose
 const mongoose = require('mongoose');
+//variables
+require('dotenv').config();
 // constantes de rutas (imports)
 const productRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/orders');
 const usersRoutes = require('./api/routes/users');
 
 //conexion a la base de datos, desde el link que nos proporciono la base de datos en ATLAS. REVISAR: nodemon.json para esa variable del password
-mongoose.connect('mongodb+srv://maxisun:maxiroot@node-rest-shop-40ulq.mongodb.net/test?retryWrites=true');
+mongoose.connect('mongodb+srv://maxisun:'+process.env.MONGO_ATLAS_PASSWORD+'@node-rest-shop-40ulq.mongodb.net/test?retryWrites=true');
 
 mongoose.Promise = global.Promise;
 

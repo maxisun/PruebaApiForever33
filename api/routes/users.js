@@ -4,8 +4,38 @@ const router = express.Router();
 const mongoose = require('mongoose');
 //paquete bcrypt
 const bcrypt = require('bcrypt');
+//paquete jsonwebtoken
+const jwt = require('jsonwebtoken');
+//variables
+require('dotenv').config();
 //importando el modelo de users
 const User = require('../models/users');
+
+//
+router.get('/', (req, res, next) => {
+  User.find()
+  .select('_id email')
+  // muestra un merge de los productos linkeados a las ordenes y los campos que queremos que se vean nada mas
+  .exec()
+  .then(docs => {
+    if (docs.length > 0){
+      res.status(200).json(docs);//retornamos el response de arriba
+    } else { //por si no hay productos
+      res.status(404).json({
+        message: "No users found"
+      });
+    }
+  })
+  .catch(err => {
+    res.status(500).json({
+      error: err
+    });
+  });
+});
+//
+
+
+
 
 //POST para usuario
 router.post('/signup', (req, res, next) => {
@@ -48,10 +78,52 @@ router.post('/signup', (req, res, next) => {
   });
 });
 
+//POST login
+router.post('/login', (req, res, next) => {
+  User.find({email: req.body.email}).exec()
+  .then(user => { // un array de usuarios/correos
+    if (user.length < 1) {
+      return res.status(401).json({
+        message: 'Authentication Failed'
+      });
+    }
+    bcrypt.compare(req.body.password, user[0].password, (err, result) => {
+      if (err) {
+        return res.status(401).json({
+          message: 'Authentication Failed'
+        });
+      }
+      if (result) {
+        //token method
+        const token = jwt.sign({
+          userId: user[0]._id,
+          email: user[0].email
+        },
+        process.env.JWT_KEY,
+        {
+          expiresIn: "1h"
+        });
+        return res.status(200).json({
+          message: 'Login successfully',
+          token: token
+        });
+      }
+      res.status(401).json({
+        message: 'Authentication Failed'
+      });
+    });
+  })
+  .catch(err => {
+    res.status(500).json({
+      error: err
+    });
+  });
+});
+
 //DELETE para users
 router.delete('/:userId', (req, res, next) => {
   const id = req.params.userId
-  Product.findByIdAndRemove(id)
+  User.findByIdAndRemove(id)
   .exec()
   .then(result => {
     res.status(200).json({
