@@ -1,3 +1,4 @@
+"use strict";
 //paquete de mongoose
 const mongoose = require('mongoose');
 

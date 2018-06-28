@@ -1,9 +1,10 @@
+"use strict";
 const express = require('express');
 const router = express.Router();
 //paquete mongoose
 const mongoose = require('mongoose');
 //paquete bcrypt
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 //paquete jsonwebtoken
 const jwt = require('jsonwebtoken');
 //variables
@@ -48,7 +49,7 @@ router.post('/signup', (req, res, next) => {
       });
     } else {
       //se empieza a encryptar y a guardar en la base si se tiene exito
-      bcrypt.hash(req.body.password, 10, (err, hash) => {
+    /*  bcrypt.hash(req.body.password, 10, (err, hash) => {
         if (err) {
           return res.status(500).json({
             error: err
@@ -72,7 +73,7 @@ router.post('/signup', (req, res, next) => {
             });
           });
         }
-      });
+      });*/
     }
   });
 });

@@ -1,3 +1,4 @@
+"use strict";
 const express = require('express');
 //paquete para el manejo de rutas y peticiones Http: Router
 const router = express.Router();

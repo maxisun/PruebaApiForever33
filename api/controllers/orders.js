@@ -1,3 +1,4 @@
+"use strict";
 //importando el modelo de orders
 const Order = require('../models/orders');
 //importando el modelo de productos
