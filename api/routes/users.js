@@ -4,7 +4,7 @@ const router = express.Router();
 //paquete mongoose
 const mongoose = require('mongoose');
 //paquete bcrypt
-//const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 //paquete jsonwebtoken
 const jwt = require('jsonwebtoken');
 //variables
